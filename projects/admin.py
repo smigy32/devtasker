@@ -7,6 +7,7 @@ from .models import Project, ProjectMembership
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ["name", "owner", "visibility", "created_at"]
     list_filter = ["visibility", "is_archived"]
+    search_fields = ["name", "description"]
 
 
 @admin.register(ProjectMembership)
