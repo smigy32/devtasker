@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.utils import timezone
+
+from .filter_utils import OverdueFilter
 from .models import Task, Tag
 
 
@@ -11,8 +14,9 @@ class TagAdmin(admin.ModelAdmin):
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ["name", "project", "assigned_to", "status", "priority", "due_date"]
-    list_filter = ["status", "priority", "project"]
+    list_filter = ["status", "priority", "project", OverdueFilter]
     search_fields = ["name", "description"]
     autocomplete_fields = ["assigned_to", "project", "tags"]
     ordering = ["due_date", "priority"]
     date_hierarchy = "due_date"
+    readonly_fields = ["created_at", "updated_at"]
