@@ -20,3 +20,8 @@ class TaskAdmin(admin.ModelAdmin):
     ordering = ["due_date", "priority"]
     date_hierarchy = "due_date"
     readonly_fields = ["created_at", "updated_at"]
+    actions = ["mark_completed"]
+    
+    @admin.action(description="Mark selected tasks as Completed")
+    def mark_completed(modeladmin, request, queryset):
+        queryset.update(status="completed")
