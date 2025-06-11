@@ -43,22 +43,23 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 
 class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Project
-    fields = ["name", "description", "tech_stack", "visibility", "is_archieved"]
+    fields = ["name", "description", "tech_stack", "visibility", "is_archived"]
     template_name = "projects/project_form.html"
     success_url = reverse_lazy("projects:project_list")
     
     def test_func(self):
         project = self.get_object()
-        membership = ProjectMembership.objects.get(project=project, user=self.request.user)
+        membership = ProjectMembership.objects.filter(project=project, user=self.request.user).first()
+        print("Membership", membership)
         return membership and membership.role in ["admin", "owner"]
     
 
-class PrpjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Project
     template_name = "projects/project_confirm_delete.html"
     success_url = reverse_lazy("projects:project_list")
     
     def test_func(self):
         project = self.get_object()
-        membership = ProjectMembership.objects.get(project=project, user=self.request.user)
+        membership = ProjectMembership.objects.filter(project=project, user=self.request.user).first()
         return membership and membership.role in ["admin", "owner"]

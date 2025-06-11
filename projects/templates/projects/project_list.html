@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+    <div class="d-flex align-items-center">
+      <h1>Projects</h1>
+      <a href="{% url 'projects:project_create' %}" class="btn btn-success ms-auto">Create</a>
+    </div>
+    {% if projects %}
+        <ul class="list-group">
+            {% for project in projects %}
+                <li class="list-group-item">
+                    <a href="{% url 'projects:project_detail' project.pk %}">{{ project.name }}</a> 
+                    <br>
+                    <small>{{ project.visibility|capfirst }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No projects yet.</p>
+    {% endif %}
+{% endblock %}

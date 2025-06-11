@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+    <h1>{{ project.name }}</h1>
+
+    <hr>
+
+    <p><strong>Description:</strong> {{ project.description }}</p>
+    <p><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
+    <p><strong>Visibility:</strong> {{ project.visibility|capfirst }}</p>
+
+    <a href="{% url 'projects:project_edit' project.pk %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'projects:project_delete' project.pk %}" class="btn btn-danger">Delete</a>
+
+    <hr>
+
+    <h3>Tasks (Coming soon)</h3>
+{% endblock %}
